@@ -114,7 +114,7 @@ if __name__ == '__main__':
 
     for file_path, file_name in file_list:
 
-        if file_name[-3:] == 'sas':
+        if file_name[-3:] == 'log':
             file_full_path = file_path + '\\' + file_name
             log_content = get_log_content(file_full_path)
             ext_db_checker(log_content, library_reference_list, engine_name_list, library_statement)
@@ -132,10 +132,10 @@ if __name__ == '__main__':
     if platform.system() == 'Windows':
         if not os.path.isdir(path + "\\00-Data Model"):
             os.makedirs(path + "\\00-Data Model")
-        lib_df.to_excel(path + "\\00-Data Model\\sas_lib.xlsx", index=False)
+        lib_df.to_excel(path + "\\00-Data Model\\log_lib.xlsx", index=False)
     else:
         if not os.path.isdir(path + "/00-Data Model"):
             os.makedirs(path + "/00-Data Model")
-        lib_df.to_excel(path + "/00-Data Model/sas_lib.xlsx", index=False)
+        lib_df.to_excel(path + "/00-Data Model/log_lib.xlsx", index=False)
 
     logging.info('end of the program')
