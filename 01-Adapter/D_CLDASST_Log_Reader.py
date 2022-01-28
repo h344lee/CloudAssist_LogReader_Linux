@@ -132,10 +132,10 @@ if __name__ == '__main__':
     if platform.system() == 'Windows':
         if not os.path.isdir(path + "\\00-Data Model"):
             os.makedirs(path + "\\00-Data Model")
-        lib_df.to_excel(path + "\\00-Data Model\\log_lib.xlsx", index=False)
+        lib_df.to_excel(path + "\\00-Data Model\\D_CLDASST_Log_Reader_Output.xlsx", index=False)
     else:
         if not os.path.isdir(path + "/00-Data Model"):
             os.makedirs(path + "/00-Data Model")
-        lib_df.to_excel(path + "/00-Data Model/log_lib.xlsx", index=False)
+        lib_df.to_excel(path + "/00-Data Model/D_CLDASST_Log_Reader_Output.xlsx", index=False)
 
     logging.info('end of the program')
