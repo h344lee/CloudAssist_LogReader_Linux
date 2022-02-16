@@ -3,7 +3,7 @@ input file: 01-Adapter/log
 output file: 00-Data Model
 program: 01-Adapter
 """
-
+import csv
 import os
 import platform
 import pandas as pd
@@ -38,7 +38,7 @@ def ext_db_checker(record_content, library_reference_list, engine_name_list, lib
 
             library_reference_list.append(lib_db[0])
             engine_name_list.append('Base')
-            library_statement.append('library '+lib_db[0] + " " + lib_db[1]+lib_db[2] + ";")
+            library_statement.append("libname "+lib_db[0] + " " + lib_db[1]+lib_db[2] + ";")
 
     # case 2 external engine
     lib_ext_regex = re.compile(r" libname\s+(\w+?)\s+(\w+?)\s+(.*?);", re.IGNORECASE)
@@ -48,7 +48,7 @@ def ext_db_checker(record_content, library_reference_list, engine_name_list, lib
         for lib_db in lib_ext_list:
             library_reference_list.append(lib_db[0])
             engine_name_list.append(lib_db[1])
-            library_statement.append('library ' + lib_db[0] + " " + lib_db[1] + " " + lib_db[2] + ";")
+            library_statement.append("libname " + lib_db[0] + " " + lib_db[1] + " " + lib_db[2] + ";")
 
 
 def getInventory(current_path, current_folder, visited, file_list):
@@ -126,6 +126,9 @@ if __name__ == '__main__':
         logging.debug(file_record)
         lib_id += 1
 
+    print(lib_df.iloc[1])
+    print(lib_df.iloc[10])
+
     # get an absolute path of parent folder
     path = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
     # write the result to the 00-Data Model directory
@@ -133,13 +136,13 @@ if __name__ == '__main__':
         if not os.path.isdir(path + "\\00-Data Model"):
             os.makedirs(path + "\\00-Data Model")
         lib_df.to_excel(path + "\\00-Data Model\\D_CLDASST_DISC_LIB_ENG.xlsx", index=False)
-        lib_df.to_csv(path + "\\00-Data Model\\D_CLDASST_DISC_LIB_ENG.csv", index=False)
+        lib_df.to_csv(path + "\\00-Data Model\\D_CLDASST_DISC_LIB_ENG.csv", index=False, quoting=csv.QUOTE_NONE)
 
     else:
         if not os.path.isdir(path + "/00-Data Model"):
             os.makedirs(path + "/00-Data Model")
         lib_df.to_excel(path + "/00-Data Model/D_CLDASST_DISC_LIB_ENG.xlsx", index=False)
-        lib_df.to_csv(path + "/00-Data Model/D_CLDASST_DISC_LIB_ENG.csv", index=False)
+        lib_df.to_csv(path + "/00-Data Model/D_CLDASST_DISC_LIB_ENG.csv", index=False, quoting=csv.QUOTE_NONE)
     logging.info('end of the program')
 
 
