@@ -1,7 +1,7 @@
 """
-input file: 01-Adapter/log
-output file: 00-Data Model
-program: 01-Adapter
+input file: Adapter/log
+output file: Data Model
+program: Adapter
 """
 import csv
 import os
@@ -115,7 +115,10 @@ if __name__ == '__main__':
     for file_path, file_name in file_list:
 
         if file_name[-3:] == 'log':
-            file_full_path = file_path + '\\' + file_name
+            if platform.system() == 'Windows':
+                file_full_path = file_path + '\\' + file_name
+            else:
+                file_full_path = file_path + '/' + file_name
             log_content = get_log_content(file_full_path)
             ext_db_checker(log_content, library_reference_list, engine_name_list, library_statement)
 
@@ -126,23 +129,20 @@ if __name__ == '__main__':
         logging.debug(file_record)
         lib_id += 1
 
-    print(lib_df.iloc[1])
-    print(lib_df.iloc[10])
-
     # get an absolute path of parent folder
     path = os.path.abspath(os.path.join(os.getcwd(), os.pardir))
     # write the result to the 00-Data Model directory
     if platform.system() == 'Windows':
-        if not os.path.isdir(path + "\\00-Data Model"):
-            os.makedirs(path + "\\00-Data Model")
-        lib_df.to_excel(path + "\\00-Data Model\\D_CLDASST_DISC_LIB_ENG.xlsx", index=False)
-        lib_df.to_csv(path + "\\00-Data Model\\D_CLDASST_DISC_LIB_ENG.csv", index=False, quoting=csv.QUOTE_NONE)
+        if not os.path.isdir(path + "\\Data_Model\\Extracted_Files"):
+            os.makedirs(path + "\\Data_Model\\Extracted_Files")
+        lib_df.to_excel(path + "\\Data_Model\\Extracted_Files\\D_CLDASST_DISC_LIB_ENG.xlsx", index=False)
+        lib_df.to_csv(path + "\\Data_Model\\Extracted_Files\\D_CLDASST_DISC_LIB_ENG.csv", index=False, quoting=csv.QUOTE_NONE)
 
     else:
-        if not os.path.isdir(path + "/00-Data Model"):
-            os.makedirs(path + "/00-Data Model")
-        lib_df.to_excel(path + "/00-Data Model/D_CLDASST_DISC_LIB_ENG.xlsx", index=False)
-        lib_df.to_csv(path + "/00-Data Model/D_CLDASST_DISC_LIB_ENG.csv", index=False, quoting=csv.QUOTE_NONE)
+        if not os.path.isdir(path + "/Data_Model/Extracted_Files"):
+            os.makedirs(path + "/Data_Model/Extracted_Files")
+        lib_df.to_excel(path + "/Data_Model/Extracted_Files/D_CLDASST_DISC_LIB_ENG.xlsx", index=False)
+        lib_df.to_csv(path + "/Data_Model/Extracted_Files/D_CLDASST_DISC_LIB_ENG.csv", index=False, quoting=csv.QUOTE_NONE)
     logging.info('end of the program')
 
 
